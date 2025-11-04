@@ -1,0 +1,461 @@
+/* --- Color Theme & Core Styles --- */
+:root {
+    --primary-color: #2c3e50;  /* Dark Slate Blue */
+    --secondary-color: #ecf0f1; /* Light Grey */
+    --accent-color: #e74c3c;   /* Red for alerts/actions */
+    --light-bg: #e7e4e4;      /* A slightly darker background for the page */
+}
+
+*, ::before, *::after {
+    box-sizing: border-box;
+}
+
+/* --- Definitive Container and Layout Styles --- */
+html {
+    height: 100%;
+    width: 100%; 
+}
+
+body {
+     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: var(--light-bg);
+    color: #333;
+    
+    /* --- RAKTAS Į STABILUMĄ YRA ČIA --- */
+    position: fixed;   /* 1. Užfiksuojame <body> vietoje, kad jis nejudėtų */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+}
+
+/* --- The App's 'Jail' --- */
+.phone-wrapper {
+    width: 100%;
+    height: var(--app-height, 100vh);
+    position: relative;   /* CRITICAL: This makes it the positioning 'parent' */
+    overflow: hidden;     /* CRITICAL: This clips any children that try to leave */
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Screen Management --- */
+.screen {
+    display: none;
+    flex-direction: column;
+    flex-grow: 1;   /* Liepiame ekranui užpildyti visą laisvą vietą phone-wrapper viduje */
+    min-height: 0;
+    text-align: left;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* --- Game Screen Specifics --- */
+
+#game-screen {
+    position: relative;
+    padding: 0 !important;
+
+    /* Įsitikinkite, kad paveikslėlio pavadinimas atitinka */
+    background-image: url('bakcground_image.jpg'); 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.game-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    
+    /* --- NAUJI STILIAI FONUI --- */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pastumia mygtuką į apačią */
+    align-items: center;
+    padding: 40px;
+    
+    /* Fonas perkeltas į #game-screen */
+}
+
+
+/* --- General Button Styles --- */
+.btn {
+    padding: 15px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+    max-width: 350px; /* Kad mygtukas nebūtų per platus */
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #c0392b;
+}
+
+.btn-secondary {
+    background-color: #ecf0f1;
+    color: #333;
+}
+.btn-secondary:hover {
+    background-color: #d2d6d8;
+}
+
+
+/* The #game-screen needs to be a positioning context for our absolute panel */
+#game-screen {
+    position: relative;
+    padding: 0 !important;
+    
+}
+
+/* The floating NPC Panel */
+.dialogue-container {
+    display: none; /* Controlled by JS */
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    
+    bottom: 229px; /* Adjust this value based on the player-dialogue height */
+    
+    background-color: rgba(40, 40, 40, 0.9);
+    color: #d1d1d1;
+    border-radius: 0px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+
+    z-index: 10;
+
+    /* Smoothly animate top and bottom properties for the accordion effect */
+    transition: top 0.4s ease-out, bottom 0.4s ease-out;
+}
+.dialogue-container.is-active {
+    display: flex; /* Make it visible */
+}
+
+/* The EXPANDED state */
+.dialogue-container.is-expanded {
+    /* Expand upwards */
+    top: 0px; /* Leaves space for the game header */
+    /* Expand downwards to cover the screen */
+    bottom: 0px;
+}
+
+/* The handle is now attached to the container itself */
+.dialogue-container::after {
+    content: '';
+    position: absolute;
+    bottom: 8px; /* At the bottom of the panel */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 5px;
+    background-color: #555;
+    border-radius: 3px;
+}
+
+/* This inner container just holds the content */
+#npc-dialogue {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#npc-name {
+    display: none;
+}
+
+.npc-prefix {
+    /* To make it bold */
+    font-weight: bold;
+
+    /* To give it a different, more vibrant color */
+    color: white; 
+    
+    /* You can adjust these properties to get the exact look you want! */
+}
+
+.dialogue-scroll-content {
+    width: 100%;
+    /*max-width: 550px;*/
+    /*margin: 0 auto;*/
+    height: 100%;
+    overflow-y: auto; /* Allow scrolling */
+    padding: 20px 30px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column-reverse; /* Stack items from bottom to top! */
+    align-items: flex-start;
+}
+
+#dialogue-history {
+    display: none;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 20px;
+}
+.dialogue-container.is-expanded #dialogue-history {
+    display: block;
+}
+
+
+#player-dialogue {
+
+    display: none; 
+    flex-direction: column; 
+    align-items: center;    
+    height: 229px;        
+    z-index: 5;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+
+    /* --- PRIDĖK ŠIAS SAVYBES --- */
+    position: absolute; /* RAKTAS: Padaro elementą "plaukiojantį" */
+    bottom: 0;          /* Prispaudžia prie ekrano apačios */
+    left: 0;            /* Prispaudžia prie kairės (taiso tarpą!) */
+    right: 0;           /* Prispaudžia prie dešinės (taiso tarpą!) */
+}
+
+#player-dialogue.is-hidden {
+    /* This moves the element down by 100% of its own height, so it's off-screen */
+    transform: translateY(100%);
+    pointer-events: none; /* Prevents accidental taps while hidden */
+}
+
+/* Update the .is-active rule to use flex */
+#player-dialogue.is-active {
+    display: flex; /* <-- Change this from 'block' to 'flex' */
+}
+
+#player-dialogue.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+}
+
+#player-response-text {
+    width: 100%;
+    background-color: rgba(44, 62, 80, 0.9);
+    color: white;
+
+    padding: 13px 30px;
+    box-sizing: border-box; /* Ensures padding is calculated correctly */
+  
+    /* These properties position the box itself */
+    position: absolute;  
+    top: 0;              
+    left: 0;             
+    right: 0;            
+    bottom: 80px;         /* <-- This gives the box its height */
+    
+    overflow-y: auto;     /* <-- This adds scrolling for long text */
+    border-radius: 0;
+    
+    max-width: none;
+
+}
+
+.player-prefix {
+    
+    font-weight: bold;
+
+    color: #bdc3c7; 
+    
+}
+
+#response-dots {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    position: absolute; /* Position it relative to the #player-dialogue container */
+    bottom: calc(56px + env(safe-area-inset-bottom));
+    left: 0;            /* Center it horizontally */
+    right: 0;
+}
+
+.response-dot {
+    width: 15px;
+    height: 15px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, 
+    transform 0.2s ease-in-out;
+}
+
+
+.response-dot:hover {
+    background-color: #a0a0a0;
+}
+
+.response-dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.3);
+}
+
+.response-dot.used {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    cursor: not-allowed;
+}
+
+/* --- Toast Notification Styles --- */
+#toast-notification {
+    position: absolute;
+    bottom: -100px; /* Start hidden below the screen */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+    bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-size: 1em;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+#toast-notification.show {
+    opacity: 1;
+    bottom: 30px; /* Slide into view */
+}
+
+/* Konteineris, kuris "apkerpa" animaciją */
+#current-dialogue-wrapper {
+    position: relative;
+    overflow: hidden;
+    /* Užtikrina, kad konteineris nesubliūkštų animacijos metu */
+    min-height: 1.5em; 
+}
+
+/* Pagrindinis stilius teksto elementui */
+#npc-text {
+    /* Numatoma būsena: vietoje */
+    transform: translateY(0);
+    transition: transform 0.4s ease-in-out;
+    width: 100%;
+}
+
+/* Klasė naujam tekstui, kuris ateina iš APAČIOS */
+#npc-text.is-entering {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(100%); /* Pradeda po konteineriu */
+}
+
+/* Klasė senam tekstui, kuris išeina į VIRŠŲ */
+#npc-text.is-exiting {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-100%); /* Baigia virš konteinerio */
+}
+
+/* CHOICE INDICATOR*/
+
+#choice-indicator {
+    display: none; /* Hidden by default */
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    margin: 10px auto 0;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+#choice-indicator.is-visible {
+    display: block; /* Show it when it has this class */
+}
+
+#choice-indicator:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* --- QR Scanner Screen --- */
+
+/* This screen is now a full-page, fixed overlay */
+#qr-scan-screen {
+    /* display: none; <-- THIS LINE IS NOW REMOVED */
+    position: fixed; /* Position relative to the browser window */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 500; /* Ensure it's on top of everything */
+
+    background-color: #111;
+    padding: 25px;
+
+    /* These are needed for the .active class to work */
+    flex-direction: column; 
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* This rule to show the screen remains the same and will now work correctly */
+.screen.active {
+    display: flex;
+}
+
+#qr-scan-screen h2 {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    
+    color: white;
+    text-align: center;
+    margin: 0; 
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+#cancel-scan-btn {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    width: 80%; 
+    max-width: 300px;
+    margin-top: 0;
+}
+
+#qr-reader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: none;
+    overflow: hidden;
+}
+
+/* The video and scan region styles remain unchanged and are correct */
+#qr-reader video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+#qr-reader_scan_region {
+    border-radius: 10px;
+}

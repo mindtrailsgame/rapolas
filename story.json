@@ -1,0 +1,526 @@
+{
+  "RAPOLAS_identity": {
+    "npc": "RAPOLAS (FACILITATOR)"
+  },
+  "RAPOLAS_intro": {
+    "npc": "THE NARRATOR",
+    "text": "You step into a warm, cosy room with soft lights. A small, bright green frog is perched on a large black speaker, scribbling intently in a tiny notebook. He looks up as you enter, smiles, and gives a friendly wave.",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_intro_b"
+      }
+    ]
+  },
+  "RAPOLAS_intro_b": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Ah, hello! You're here for the course, wonderful! I'm Rapolas. I'm a team dynamics facilitator. And this,' he pats the speaker, 'is my temporary office!’",
+    "set_flag": "rapolas_met = true",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_intro_hub"
+      }
+    ]
+  },
+  "RAPOLAS_intro_hub": {
+    "npc": "YOU",
+    "text": null,
+    "choices": [
+      {
+        "text": "‘An office? Why the speaker?’",
+        "target_node": "RAPOLAS_speaker_answer"
+      },
+      {
+        "text": "‘Are you the DJ?’",
+        "target_node": "RAPOLAS_silly_dj"
+      },
+      {
+        "text": "‘You look busy. What are you working on?’",
+        "target_node": "RAPOLAS_group_intro"
+      },
+      {
+        "text": "‘If you don't mind my asking, what kind of frog are you?’",
+        "target_node": "RAPOLAS_species_intro"
+      }
+    ]
+  },
+  "RAPOLAS_silly_dj": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Oh, ha! Goodness, no. I'm just borrowing it. I'm a team facilitator, not a musician! Though, my next clients *are* a music group, coincidentally enough.’",
+    "set_flag": "rapolas_knows_team = true",
+    "choices": [
+      {
+        "text": "‘A music group? Tell me about them.’",
+        "target_node": "RAPOLAS_group_intro_b"
+      },
+      {
+        "text": "‘Let's go back. Why are you on the speaker?’",
+        "target_node": "RAPOLAS_speaker_answer"
+      },
+      {
+        "text": "‘What kind of frog are you?’",
+        "target_node": "RAPOLAS_species_intro"
+      }
+    ]
+  },
+  "RAPOLAS_speaker_answer": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘It’s a great vantage point! It reminds me of a tree, and I do my best thinking when I'm climbing. It's just an instinct, you know? I'm just finalizing my plan for a big client retreat. I leave for it first thing Friday morning.’",
+    "set_flag": "rapolas_knows_team = true",
+    "choices": [
+      {
+        "text": "‘What's the client retreat about?’",
+        "target_node": "RAPOLAS_group_intro_b"
+      },
+      {
+        "text": "‘You mentioned climbing. What kind of frog are you?’",
+        "target_node": "RAPOLAS_species_intro"
+      }
+    ]
+  },
+  "RAPOLAS_group_intro": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘I'm prepping for a new client. A brand-new music group. I'm just working on their teambuilding plan now. I leave for their retreat on Friday.’",
+    "set_flag": "rapolas_knows_team = true",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_group_intro_b"
+      }
+    ]
+  },
+  "RAPOLAS_group_intro_b": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Honestly, I'm a bit nervous. I haven't met them in person, just got the client briefing. It's a team of six. The leader (my client) plays violin. Then there's a drummer who... well, growls. A vocalist who's a crow. A wind-pipe player. A quiet, broody bassist. And a dancer. They sound... intense.’",
+    "choices": [
+      {
+        "text": "‘That's quite a lineup. What's the hardest part to plan for?’",
+        "target_node": "RAPOLAS_challenge_hub_entry"
+      },
+      {
+        "text": "‘Maybe you can teach me some of your techniques?’",
+        "target_node": "RAPOLAS_ei_hub_entry"
+      },
+      {
+        "text": "‘What kind of frog are you? You seem... specialized.’",
+        "target_node": "RAPOLAS_species_intro",
+        "condition": "rapolas_species_asked != true"
+      }
+    ]
+  },
+  "RAPOLAS_species_intro": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘I'm a European Tree Frog! *Hyla arborea*, to be precise. We're known for this bright green 'leaf' skin and our climbing ability. We have these wonderful adhesive discs on our toes.’",
+    "set_flag": "rapolas_species_asked = true",
+    "choices": [
+      {
+        "text": "‘Wow! Can you stick to the wall?’",
+        "target_node": "RAPOLAS_silly_stick"
+      },
+      {
+        "text": "‘So you must be a good swimmer too, right?’",
+        "target_node": "RAPOLAS_species_intro_b"
+      }
+    ]
+  },
+  "RAPOLAS_silly_stick": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Ha! Not a perfectly flat, painted wall, no. Our adhesive pads aren't *that* good. But this speaker? Or a nice, damp leaf or tree branch? Absolutely. It's a grip, not suction!’",
+    "choices": [
+      {
+        "text": "‘So you must be a good swimmer too, right?’",
+        "target_node": "RAPOLAS_species_intro_b"
+      },
+      {
+        "text": "‘You mentioned a team...’",
+        "target_node": "RAPOLAS_group_intro_b",
+        "condition": "rapolas_knows_team == true"
+      }
+    ]
+  },
+  "RAPOLAS_species_intro_b": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Ah, that's the tricky part! We *can* swim, but we're not strong swimmers. We're built for climbing. We're meant for calm, stagnant water, like ponds or ditches.’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_species_intro_c"
+      }
+    ]
+  },
+  "RAPOLAS_species_intro_c": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘In a fast-moving *river*? (He shudders). We just don't have the endurance. We'd tire out and... well. It's a serious risk. And this retreat on Friday? The client insists on holding it right by a river. So, I'm... (he taps his notebook) ...managing my anxiety.’",
+    "choices": [
+      {
+        "text": "‘You mentioned a team retreat? What’s the challenge there?’",
+        "target_node": "RAPOLAS_challenge_hub_entry",
+        "condition": "rapolas_knows_team == true"
+      },
+      {
+        "text": "‘You look busy. What are you working on?’",
+        "target_node": "RAPOLAS_group_intro",
+        "condition": "rapolas_knows_team != true"
+      },
+      {
+        "text": "‘Let's talk about something else.’",
+        "target_node": "RAPOLAS_intro_hub"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_hub_entry": {
+    "npc": "THE NARRATOR",
+    "text": "Rapolas opens his tiny notebook with slightly shaky hands. You see six quick, nervous sketches:\n\n• A dark violin with intense, scratchy lines.\n• A big wolf-man growling, with a tiny tear in its eye.\n• A small crow flapping its wings, papers flying everywhere.\n• A little wind swirl with a worried face, blowing leaves.\n• A man in a dark coat, arms crossed, no smile.\n• A woman with long hair, spinning in circles with a big smile.",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_hub": {
+    "npc": "YOU",
+    "text": null,
+    "set_flag": "rapolas_challenge_met = true",
+    "choices": [
+      {
+        "text": "‘Tell me about the growler.’",
+        "target_node": "RAPOLAS_challenge_growler_A",
+        "set_flag": "rapolas_challenge_growler = true"
+      },
+      {
+        "text": "‘Tell me about the flapping crow.’",
+        "target_node": "RAPOLAS_challenge_crow_A",
+        "set_flag": "rapolas_challenge_crow = true"
+      },
+      {
+        "text": "‘Tell me about the wind-maker.’",
+        "target_node": "RAPOLAS_challenge_wind_A",
+        "set_flag": "rapolas_challenge_wind = true"
+      },
+      {
+        "text": "‘What kind of music do they even play?’",
+        "target_node": "RAPOLAS_silly_music"
+      },
+      {
+        "text": "‘Let’s learn the theory. What is Emotional Intelligence?’",
+        "target_node": "RAPOLAS_ei_hub_entry"
+      },
+      {
+        "text": "‘Good luck!’ (Leave)",
+        "target_node": "RAPOLAS_end"
+      }
+    ]
+  },
+  "RAPOLAS_silly_music": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘You know, I haven't the slightest! The client was very focused on their *dynamics*, not their... uh... discography. He did mention his violin is key? I'm just there to help them stop... well, growling at each other.’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_growler_A": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘The leader says he growls when he's scared, not angry. Apparently he broke a chair already. My goal is to make him feel safe when we meet.’",
+    "choices": [
+      {
+        "text": "‘What would help him?’",
+        "target_node": "RAPOLAS_challenge_growler_B"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_growler_B": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘That's the question! As a facilitator, what would *you* do?’",
+    "choices": [
+      {
+        "text": "‘Give him space. Let him approach you.’",
+        "target_node": "RAPOLAS_advice_growler_space"
+      },
+      {
+        "text": "‘Show you are calm. Be a good example.’",
+        "target_node": "RAPOLAS_advice_growler_rules"
+      },
+      {
+        "text": "‘Give him a simple, physical job to do.’",
+        "target_node": "RAPOLAS_advice_growler_task"
+      }
+    ]
+  },
+  "RAPOLAS_advice_growler_space": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Yes! Good. Don't crowd him. That's about 'Social Awareness.' I'll wait for him. Thank you!’",
+    "is_key_statement": true,
+    "statement_title": "Rapolas’s Note",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_advice_growler_rules": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Good! 'Self-Management' on my part. He'll see I'm not a threat. I will stay calm and strong.’",
+    "is_key_statement": true,
+    "statement_title": "Rapolas’s Note",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_advice_growler_task": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Smart! 'Relationship Management.' Give him a task, not a conversation. I'll ask him to help set up the equipment. He's probably strong.’",
+    "is_key_statement": true,
+    "statement_title": "Rapolas’s Note",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_crow_A": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Ah, the vocalist. The client says she flaps and caws when she's nervous, and she's *always* nervous. And... (he checks his notes) ...'has an aversion to silver'? Odd. I need to figure out how to ground her.’",
+    "choices": [
+      {
+        "text": "‘What would *you* do?’",
+        "target_node": "RAPOLAS_challenge_crow_B"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_crow_B": {
+    "npc": "YOU",
+    "text": null,
+    "choices": [
+      {
+        "text": "‘Ask her what she needs to feel comfortable.’",
+        "target_node": "RAPOLAS_advice_crow_ask"
+      },
+      {
+        "text": "‘Maybe don't wear any silver?’",
+        "target_node": "RAPOLAS_advice_crow_silver"
+      }
+    ]
+  },
+  "RAPOLAS_advice_crow_ask": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Direct and empathetic. I like it. A good 'Social Awareness' check-in. Thank you!’",
+    "is_key_statement": true,
+    "statement_title": "Rapolas’s Note",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_advice_crow_silver": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Ha! You're right. So simple. I'll leave my silver pen at home. That's good 'Relationship Management'—adapting to their needs. Smart!’",
+    "is_key_statement": true,
+    "statement_title": "Rapolas’s Note",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_wind_A": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘He apparently makes little winds... *inside*... when he's upset. Papers fly! The leader says he's arrogant but also very fragile. A tough combo.’",
+    "choices": [
+      {
+        "text": "‘What would *you* do?’",
+        "target_node": "RAPOLAS_challenge_wind_B"
+      }
+    ]
+  },
+  "RAPOLAS_challenge_wind_B": {
+    "npc": "YOU",
+    "text": null,
+    "choices": [
+      {
+        "text": "‘Acknowledge his feelings: 'I see you're upset.'’",
+        "target_node": "RAPOLAS_advice_wind_name"
+      },
+      {
+        "text": "‘Give him a small job: 'Can you use that wind to... hold the door?'’",
+        "target_node": "RAPOLAS_advice_wind_redirect"
+      }
+    ]
+  },
+  "RAPOLAS_advice_wind_name": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Yes! Name the feeling. Show him I'm paying attention. That's 'Social Awareness.' I'll try that on Friday.’",
+    "is_key_statement": true,
+    "statement_title": "Rapolas’s Note",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_advice_wind_redirect": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Ha! Redirect the behavior! 'Relationship Management.' Turn a disruption into a contribution. That's brilliant! I'll use that.’",
+    "is_key_statement": true,
+    "statement_title": "Rapolas’s Note",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_challenge_hub"
+      }
+    ]
+  },
+  "RAPOLAS_ei_hub_entry": {
+    "npc": "THE NARRATOR",
+    "text": "Rapolas puts down his pen. ‘Yes, of course! The core theory. Emotional Intelligence, according to Goleman, has four main parts. Which one should we review?’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_ei_hub"
+      }
+    ]
+  },
+  "RAPOLAS_ei_hub": {
+    "npc": "YOU",
+    "text": null,
+    "set_flag": "rapolas_ei_met = true",
+    "choices": [
+      {
+        "text": "‘What is Self-Awareness?’",
+        "target_node": "RAPOLAS_ei_self_awareness_A",
+        "set_flag": "rapolas_ei_asked_1 = true"
+      },
+      {
+        "text": "‘What is Self-Management?’",
+        "target_node": "RAPOLAS_ei_self_management_A",
+        "set_flag": "rapolas_ei_asked_2 = true"
+      },
+      {
+        "text": "‘What is Social Awareness?’",
+        "target_node": "RAPOLAS_ei_social_awareness_A",
+        "set_flag": "rapolas_ei_asked_3 = true"
+      },
+      {
+        "text": "‘What is Relationship Management?’",
+        "target_node": "RAPOLAS_ei_relationship_management_A",
+        "set_flag": "rapolas_ei_asked_4 = true"
+      },
+      {
+        "text": "‘This all sounds great... but is it *really* going to work on them?’",
+        "target_node": "RAPOLAS_silly_doubt"
+      },
+      {
+        "text": "‘Let's talk about the team challenges again.’",
+        "target_node": "RAPOLAS_challenge_hub_entry",
+        "condition": "rapolas_challenge_met == true"
+      },
+      {
+        "text": "‘I think you're ready!’ (Leave)",
+        "target_node": "RAPOLAS_end"
+      }
+    ]
+  },
+  "RAPOLAS_silly_doubt": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘(He chuckles) A fair question. But it's the only way. You can't build a house... or a band... on a shaky foundation. These four dimensions *are* the foundation. Without them, the team... (he taps his notebook) ...the team will just collapse into chaos. It's vital!’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_ei_hub"
+      }
+    ]
+  },
+  "RAPOLAS_ei_self_awareness_A": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘It’s knowing your *own* emotions. I feel it in my body. My legs get shaky when I'm nervous—like I am about that river! Just *noticing* that feeling, and naming it 'anxiety,'—that is Self-Awareness.’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_ei_hub"
+      }
+    ]
+  },
+  "RAPOLAS_ei_self_management_A": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘It’s what you *do* with that feeling. My legs are shaky (Self-Awareness), but I can't run away. I must breathe slow, count to five, and *choose* to act calmly. That is Self-Management.’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_ei_hub"
+      }
+    ]
+  },
+  "RAPOLAS_ei_social_awareness_A": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘That’s turning your awareness outwards. Empathy. I *watch* the team. The growler’s ears might go down. That means he's scared, not angry. Seeing that *difference* is Social Awareness.’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_ei_hub"
+      }
+    ]
+  },
+  "RAPOLAS_ei_relationship_management_A": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘That's using all that data to guide the team. I see the 'wind-maker' is arrogant and the 'bassist' is withdrawn. I must *actively* build a bridge between them. That is Relationship Management.’",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_ei_hub"
+      }
+    ]
+  },
+  "RAPOLAS_re_entry": {
+    "npc": "THE NARRATOR",
+    "text": "Rapolas is still on the big speaker, reviewing his notes. He smiles when he sees you.",
+    "choices": [
+      {
+        "text": "...",
+        "target_node": "RAPOLAS_re_entry_hub"
+      }
+    ]
+  },
+  "RAPOLAS_re_entry_hub": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Hello again! Back to help me prep for my problem clients? I still have to finish my plan before Friday. What else can I help you with?’",
+    "choices": [
+      {
+        "text": "‘Let's talk about the team challenges again.’",
+        "target_node": "RAPOLAS_challenge_hub",
+        "condition": "rapolas_challenge_met == true"
+      },
+      {
+        "text": "‘Let's review the EI theory.’",
+        "target_node": "RAPOLAS_ei_hub",
+        "condition": "rapolas_ei_met == true"
+      },
+      {
+        "text": "‘I just wanted to say hi.’",
+        "target_node": "RAPOLAS_re_entry_hub"
+      },
+      {
+        "text": "‘I think you're ready!’ (Leave)",
+        "target_node": "RAPOLAS_end"
+      }
+    ]
+  },
+  "RAPOLAS_end": {
+    "npc": "RAPOLAS (FACILITATOR)",
+    "text": "‘Thank you for all the help! I feel much better. See you after Friday – if the 'wind guy' doesn’t blow me and all my notes straight into that river!’ *He giggles nervously and hugs his notebook tight.*",
+    "is_end": true,
+    "choices": []
+  }
+}

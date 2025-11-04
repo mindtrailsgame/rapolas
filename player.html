@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapolo Istorija</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+<body>
+    <div class="phone-wrapper">
+
+        <div id="game-screen" class="screen">
+
+            <main class="game-content" id="game-content">
+                <button id="scan-qr-btn" class="btn btn-primary">Skenuoti Rapolo QR</button>
+            </main>
+            
+            <main class="dialogue-container" id="dialogue-container">
+                <div id="npc-dialogue">
+                    <div class="dialogue-scroll-content">
+    
+                    <div id="current-dialogue-wrapper">
+                        <h3 id="npc-name">NPC Name</h3>
+                        <p id="npc-text">NPC dialogue will appear here...</p>
+                            <div id="choice-indicator"></div>
+                    </div>
+
+                    <div id="dialogue-history"></div>
+                        </div>
+
+               
+                    </div>
+                </div>
+            </main>
+
+            <div id="player-dialogue">
+                <div id="player-response-text" class="btn">
+                    ...
+                </div>
+                <div id="response-dots">
+                </div>
+            </div>
+        </div>
+
+        <div id="toast-notification"></div>
+
+        <div id="qr-scan-screen" class="screen">
+                <h2>Nuskenuokite QR kodą</h2>
+                <div id="qr-reader"></div>
+                <button id="cancel-scan-btn" class="btn btn-secondary">Atšaukti</button>
+        </div>
+    
+    </div>
+
+   <script src="app.js"></script>
+
+</body>
+</html>
