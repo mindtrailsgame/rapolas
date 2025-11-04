@@ -153,9 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeQrScanner() {
         html5QrCode = new Html5Qrcode("qr-reader");
-        /*dom.scanQrBtn.addEventListener('click', startQrScan);*/
+        
+        dom.scanQrBtn.addEventListener('click', startQrScan);
 
-        dom.scanQrBtn.addEventListener('click', () => startConversation('RAPOLAS')); // <--TEMPORARY
+        
 
         dom.cancelScanBtn.addEventListener('click', stopQrScan);
     }
@@ -640,4 +641,5 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('CRITICAL ERROR: Could not load story.json.', error);
             alert("Failed to load story data. The app cannot start.");
         });
+
 });
