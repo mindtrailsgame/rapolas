@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ši funkcija užregistruos sw.js failą
     function registerServiceWorker() {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
+            navigator.serviceWorker.register('sw.js')
                 .then((registration) => {
                     console.log('Service Worker užregistruotas sėkmingai:', registration.scope);
                     // Pradedame klausytis pranešimų iš SW
@@ -759,4 +759,5 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Failed to load story data. The app cannot start.");
         });
 });
+
 
