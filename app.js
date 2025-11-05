@@ -230,9 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         html5QrCode = new Html5Qrcode("qr-reader");
         
         // Padarykite šią funkciją 'async'
-        dom.scanQrBtn.addEventListener('click', async () => {
-             await startConversation('RAPOLAS'); // Naudokite 'await'
-        });
+        dom.scanQrBtn.addEventListener('click', startQrScan);
 
         dom.cancelScanBtn.addEventListener('click', stopQrScan);
     }
@@ -761,3 +759,4 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Failed to load story data. The app cannot start.");
         });
 });
+
