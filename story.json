@@ -211,22 +211,22 @@
     "set_flag": "rapolas_ei_met = true",
     "choices": [
       {
-        "text": "ADVICE: 'Focus on YOUR feelings. How are YOU reacting to them?'",
+        "text": "'Focus on YOUR feelings. How are YOU reacting to them?'",
         "target_node": "RAPOLAS_ei_self_awareness_A",
         "set_flag": "rapolas_ei_advised_1 = true"
       },
       {
-        "text": "ADVICE: 'You must control YOUR impulses. Stay calm no matter what.'",
+        "text": "'You must control YOUR impulses. Stay calm no matter what.'",
         "target_node": "RAPOLAS_ei_self_management_A",
         "set_flag": "rapolas_ei_advised_2 = true"
       },
       {
-        "text": "ADVICE: 'Try to understand THEIR perspective. Why are they acting out?'",
+        "text": "'Try to understand THEIR perspective. Why are they acting out?'",
         "target_node": "RAPOLAS_ei_social_awareness_A",
         "set_flag": "rapolas_ei_advised_3 = true"
       },
       {
-        "text": "ADVICE: 'You need to step in. Actively guide THEIR conflicts.'",
+        "text": "'You need to step in. Actively guide THEIR conflicts.'",
         "target_node": "RAPOLAS_ei_relationship_management_A",
         "set_flag": "rapolas_ei_advised_4 = true"
       },
