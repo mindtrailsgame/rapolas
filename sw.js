@@ -9,7 +9,7 @@ const appShellFiles = [
     'rapolas/style.css',
     'rapolas/app.js',
     'rapolas/story.json',
-    'rapolas/bakcground_image.jpg', // Iš jūsų CSS
+    'rapolas/background_image.jpg', // Iš jūsų CSS
     'https://unpkg.com/html5-qrcode@2.3.8/dist/html5-qrcode.min.js'
 ];
 
@@ -103,4 +103,5 @@ self.addEventListener('message', (event) => {
     }
 
 });
+
 
