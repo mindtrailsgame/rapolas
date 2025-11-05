@@ -10,7 +10,7 @@ const appShellFiles = [
     'app.js',
     'story.json',
     'bakcground_image.jpg', // Iš jūsų CSS
-    'https://unpkg.com/html5-qrcode' // Išorinis skriptas
+    'https://unpkg.com/html5-qrcode@2.3.8/dist/html5-qrcode.min.js'
 ];
 
 // --- GYVAVIMO CIKLO ĮVYKIAI ---
@@ -101,4 +101,5 @@ self.addEventListener('message', (event) => {
                 })
         );
     }
+
 });
