@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapolas</title>
+    <title>Talk to Rapolas</title>
     <link rel="stylesheet" href="style.css">
     
+    <link rel="manifest" href="manifest.json">
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
 <body>
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p id="loading-text">LOADING...</p>
+    </div>
     <div class="phone-wrapper">
 
         <div id="game-screen" class="screen">
@@ -47,9 +52,9 @@
         <div id="toast-notification"></div>
 
         <div id="qr-scan-screen" class="screen">
-                <h2>Scan the QR code</h2>
+                <h2>Scan QR code</h2>
                 <div id="qr-reader"></div>
-                <button id="cancel-scan-btn" class="btn btn-secondary">Cancel</button>
+                <button id="cancel-scan-btn" class="btn btn-secondary">Atšaukti</button>
         </div>
     
     </div>
@@ -57,8 +62,4 @@
    <script src="app.js"></script>
 
 </body>
-
 </html>
-
-
-
