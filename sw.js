@@ -5,11 +5,11 @@ const DYNAMIC_CACHE = 'dynamic-content-v1';
 
 // 1. Failai, reikalingi, kad programėlė veiktų (App Shell)
 const appShellFiles = [
-    'rapolas/index.html',
-    'rapolas/style.css',
-    'rapolas/app.js',
-    'rapolas/story.json',
-    'rapolas/background_image.jpg', // Iš jūsų CSS
+    'index.html',
+    'style.css',
+    'app.js',
+    'story.json',
+    'background_image.jpg', // From your CSS
     'https://unpkg.com/html5-qrcode@2.3.8/dist/html5-qrcode.min.js'
 ];
 
@@ -103,5 +103,6 @@ self.addEventListener('message', (event) => {
     }
 
 });
+
 
 
