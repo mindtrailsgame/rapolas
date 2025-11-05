@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
         qrReader: document.getElementById('qr-reader'),
         scanQrBtn: document.getElementById('scan-qr-btn'),
         cancelScanBtn: document.getElementById('cancel-scan-btn'),
+
+        loadingOverlay: document.getElementById('loading-overlay'),
+        loadingText: document.getElementById('loading-text')
     };
 
     // --- Game State ---
@@ -34,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchEndY = 0;
     let touchStartScrollTop = 0;
     let html5QrCode = null;
+    let onCacheCompleteCallback = null;
     const voicePlayer = new Audio();
 
 
@@ -55,32 +59,103 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    // --- HELPER FUNCTIONS ---
+
+    function showLoadingScreen(message) {
+        dom.loadingText.textContent = message;
+        dom.loadingOverlay.classList.add('is-visible');
+    }
+
+    function hideLoadingScreen() {
+        dom.loadingOverlay.classList.remove('is-visible');
+    }
+
+    // Funkcija, kuri surinks visus reikiamus garso failus
+    function getAudioUrlsForNpc(npcId) {
+        const urls = [];
+        const lowerNpcId = npcId.toLowerCase();
+        
+        for (const nodeId in storyData) {
+            // Tikriname, ar mazgas priklauso šiam NPC
+            if (nodeId.startsWith(npcId + '_')) {
+                const node = storyData[nodeId];
+                // Tikriname, ar tai NPC tekstas (ne žaidėjo ir ne tuščias)
+                if (node.text !== null && (!node.npc || node.npc.toUpperCase() !== "YOU")) {
+                    const audioSrc = `audio/${lowerNpcId}/${nodeId}.mp3`;
+                    urls.push(audioSrc);
+                }
+            }
+        }
+        console.log(`Radau ${urls.length} garso failus ${npcId}.`);
+        return urls;
+    }
+
     function handleSwipe() {
         const swipeThreshold = 50;
         if (touchEndX < touchStartX - swipeThreshold) cycleChoice(1);
         if (touchEndX > touchStartX + swipeThreshold) cycleChoice(-1);
     }
     
+    // --- SERVICE WORKER FUNCTIONS ---
+
+    // Ši funkcija klausysis pranešimų IŠ sw.js
+    function handleSwMessage(event) {
+        if (event.data && event.data.type === 'CACHE_COMPLETE') {
+            console.log(`[App] SW patvirtino, kad ${event.data.npcId} failai paruošti.`);
+            hideLoadingScreen();
+            if (onCacheCompleteCallback) {
+                onCacheCompleteCallback();
+            }
+        } else if (event.data && event.data.type === 'CACHE_ERROR') {
+            console.warn(`[App] SW klaida talpinant ${event.data.npcId} failus:`, event.data.error);
+            showToast("Klaida paruošiant failus. Garsas gali neveikti.");
+            hideLoadingScreen();
+            // Vis tiek tęsiame, net jei nepavyko
+            if (onCacheCompleteCallback) {
+                onCacheCompleteCallback();
+            }
+        }
+        onCacheCompleteCallback = null;
+    }
+
+    // Ši funkcija užregistruos sw.js failą
+    function registerServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('Service Worker užregistruotas sėkmingai:', registration.scope);
+                    // Pradedame klausytis pranešimų iš SW
+                    navigator.serviceWorker.addEventListener('message', handleSwMessage);
+                })
+                .catch((error) => {
+                    console.error('Service Worker registracija nepavyko:', error);
+                });
+        } else {
+            console.warn('Service Worker nėra palaikomas šioje naršyklėje.');
+        }
+    }
+    
     // --- QR SCANNER FUNCTIONS ---
 
-    function onScanSuccess(decodedText, decodedResult) {
+    // Pridėkite 'async' prie šios funkcijos
+    async function onScanSuccess(decodedText, decodedResult) {
         console.log(`Nuskaitytas kodas: ${decodedText}`);
 
-        stopQrScan().then(() => {
-            // Tikriname, ar nuskaitytas tekstas (pvz., "RAPOLAS") turi intro mazgą
+        // Naudojame .then() ir .catch(), nes stopQrScan grąžina Promise
+        stopQrScan().then(async () => { // Pridėkite 'async' čia
             if (storyData[`${decodedText}_intro`]) {
                 showScreen('game-screen'); 
-                startConversation(decodedText); // Pradedame pokalbį!
+                await startConversation(decodedText); // Naudokite 'await' čia
             } else {
                 console.warn(`Nuskaitytas QR kodas "${decodedText}" nėra galiojantis.`);
                 showToast(`"${decodedText}" nėra atpažintas.`);
-                showScreen('game-screen'); // Grąžiname į žaidimo ekraną
+                showScreen('game-screen');
             }
-        }).catch(err => {
+        }).catch(async (err) => { // Pridėkite 'async' čia
             console.error("Klaida stabdant skaitytuvą po sėkmės:", err);
             if (storyData[`${decodedText}_intro`]) {
                 showScreen('game-screen');
-                startConversation(decodedText);
+                await startConversation(decodedText); // Ir 'await' čia
             }
         });
     }
@@ -154,9 +229,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeQrScanner() {
         html5QrCode = new Html5Qrcode("qr-reader");
         
-        dom.scanQrBtn.addEventListener('click', startQrScan);
-
-        
+        // Padarykite šią funkciją 'async'
+        dom.scanQrBtn.addEventListener('click', async () => {
+             await startConversation('RAPOLAS'); // Naudokite 'await'
+        });
 
         dom.cancelScanBtn.addEventListener('click', stopQrScan);
     }
@@ -305,22 +381,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Supaprastinta: nebereikia tikrinti DAUMANTAS, DARKO ir t.t.
-    function startConversation(npcId) {
+    // Padarome funkciją ASINCHRONINE su 'async'
+    async function startConversation(npcId) {
+        
+        // 1. Parodome įkėlimo ekraną
+        showLoadingScreen(`Kraunami ${npcId} duomenys...`);
+        
+        // 2. Surenkame garso failų URL
+        const audioUrls = getAudioUrlsForNpc(npcId);
+
+        // 3. Tikriname, ar turime ką siųsti į Service Worker
+        if (audioUrls.length > 0 && navigator.serviceWorker.controller) {
+            console.log(`[App] Siunčiama užklausa į SW talpinti ${npcId} garso failus.`);
+            
+            // Sukuriame pažadą (Promise), kuris lauks, kol SW atsiųs atsakymą
+            const cachePromise = new Promise((resolve) => {
+                // Kai SW atsiųs pranešimą 'CACHE_COMPLETE',
+                // handleSwMessage funkcija iškvies šį 'resolve'
+                onCacheCompleteCallback = resolve;
+            });
+
+            // Išsiunčiame pranešimą Į sw.js
+            navigator.serviceWorker.controller.postMessage({
+                type: 'CACHE_AUDIO',
+                npcId: npcId,
+                urls: audioUrls
+            });
+
+            // Laukiame, kol pažadas bus išpildytas (iki 30 sekundžių)
+            await Promise.race([
+                cachePromise,
+                new Promise(resolve => setTimeout(resolve, 30000)) // Timeout
+            ]);
+
+        } else if (audioUrls.length === 0) {
+            console.log('[App] Nėra garso failų talpinimui.');
+        } else if (!navigator.serviceWorker.controller) {
+            console.warn('[App] Service Worker dar neaktyvus. Praleidžiama talpykla.');
+        }
+
+        // 4. Paslepiame įkėlimo ekraną (jei SW dar to nepadarė)
+        hideLoadingScreen();
+
+        // --- Tęsiame su likusia, jūsų originalia, startConversation logika ---
+        
         if (!gameState.progress[npcId]) { gameState.progress[npcId] = {}; }
 
-        // Naudojame numatytąjį pradžios mazgą
         let startNode = `${npcId}_intro`; 
 
-        // PATIKRINIMAS: Ar Rapolas jau buvo sutiktas? (Pagal jūsų story.json)
         if (npcId === 'RAPOLAS' && gameState.progress.RAPOLAS?.rapolas_alive_met === true) {
-             startNode = 'RAPOLAS_re_entry'; // Naudojame grįžimo mazgą
+             startNode = 'RAPOLAS_re_entry';
         }
         
         gameState.currentConversation = {
             npcId: npcId,
             currentNode: startNode,
             history: [], 
-            keyStatements: [] // Paliekame, jei prireiktų ateityje
+            keyStatements: []
         };
 
         dom.gameContent.style.display = 'none';
@@ -329,7 +446,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderNode(gameState.currentConversation.currentNode, false, false, null, null);
     }
-
     function renderHistory() {
         dom.dialogueHistory.innerHTML = '';
         if (!gameState.currentConversation || !gameState.currentConversation.history) return;
@@ -587,6 +703,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Supaprastinta: pašalinti visi nereikalingi mygtukai
     function initializeApp() {
+
+        registerServiceWorker();
+       
         // Event Listeners
         dom.playerResponseText.addEventListener('click', confirmChoice);
         dom.choiceIndicator.addEventListener('click', advanceDialogue);
@@ -641,5 +760,4 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('CRITICAL ERROR: Could not load story.json.', error);
             alert("Failed to load story data. The app cannot start.");
         });
-
 });
