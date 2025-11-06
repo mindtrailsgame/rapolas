@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function startConversation(npcId) {
         
         // 1. Parodome įkėlimo ekraną
-        showLoadingScreen(`Kraunami ${npcId} duomenys...`);
+        showLoadingScreen(`Loading ${npcId} data...`);
         
         // 2. Surenkame garso failų URL
         const audioUrls = getAudioUrlsForNpc(npcId);
@@ -759,6 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Failed to load story data. The app cannot start.");
         });
 });
+
 
 
 
