@@ -10,7 +10,7 @@ const appShellFiles = [
     'app.js',
     'story.json',
     'background_image.jpg', // From your CSS
-    'https://unpkg.com/html5-qrcode@2.3.8/dist/html5-qrcode.min.js'
+    'html5-qrcode.min.js'
 ];
 
 // --- GYVAVIMO CIKLO ĮVYKIAI ---
@@ -103,6 +103,7 @@ self.addEventListener('message', (event) => {
     }
 
 });
+
 
 
 
