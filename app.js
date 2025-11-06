@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (nodeId.startsWith(npcId + '_')) {
                 const node = storyData[nodeId];
                 // Tikriname, ar tai NPC tekstas (ne žaidėjo ir ne tuščias)
-                if (node.text !== null && (!node.npc || node.npc.toUpperCase() !== "YOU")) {
+                if (node.text && (!node.npc || node.npc.toUpperCase() !== "YOU")) {
                     const audioSrc = `audio/${lowerNpcId}/${nodeId}.mp3`;
                     urls.push(audioSrc);
                 }
@@ -759,6 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Failed to load story data. The app cannot start.");
         });
 });
+
 
 
 
