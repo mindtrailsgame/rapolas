@@ -66,7 +66,7 @@
   },
   "RAPOLAS_speaker_answer": {
     "npc": "RAPOLAS (FACILITATOR)",
-    "text": "'It's a great vantage point! It reminds me of a tree, and I do my best thinking when I'm climbing. It's just an instinct, you know? I'm just finalizing my plan for a big client retreat. I leave for it first thing Friday morning.'",
+    "text": "'It's a great vantage point! It reminds me of a tree, and I do my best thinking when I'm climbing. It's just an instinct, you know? I'm just finalizing my plan for a big client retreat. I leave for it first thing today.'",
     "set_flag": "rapolas_knows_team = true",
     "choices": [
       {
@@ -81,7 +81,7 @@
   },
   "RAPOLAS_group_intro": {
     "npc": "RAPOLAS (FACILITATOR)",
-    "text": "'I'm prepping for a new client. A brand-new music group. I'm just working on their teambuilding plan now. I leave for their retreat on Friday.'",
+    "text": "'I'm prepping for a new client. A brand-new music group. I'm just working on their teambuilding plan now. I leave for their retreat today.'",
     "set_flag": "rapolas_knows_team = true",
     "choices": [
       {
@@ -147,7 +147,7 @@
   },
   "RAPOLAS_species_intro_c": {
     "npc": "RAPOLAS (FACILITATOR)",
-    "text": "'In a fast-moving river?' He shudders. 'We just don't have the endurance. We'd tire out and... well. It's a serious risk. And this retreat on Friday? The client insists on holding it right by a river. So, I'm...' he taps his notebook, '...managing my anxiety.'",
+    "text": "'In a fast-moving river?' He shudders. 'We just don't have the endurance. We'd tire out and... well. It's a serious risk. And this retreat today? The client insists on holding it right by a river. So, I'm...' he taps his notebook, '...managing my anxiety.'",
     "choices": [
       {
         "text": "'You mentioned a team retreat? What's the challenge there?'",
@@ -197,7 +197,7 @@
   },
   "RAPOLAS_re_entry_hub": {
     "npc": "RAPOLAS (FACILITATOR)",
-    "text": "'Hello again! Back to help me prep for my problem clients? I still have to finish my plan before Friday. What other advice do you have?'",
+    "text": "'Hello again! Back to help me prep for my problem clients? I still have to finish my plan before I leave today. What other advice do you have?'",
     "choices": [
       {
         "text": "...",
@@ -300,7 +300,7 @@
   },
   "RAPOLAS_end": {
     "npc": "RAPOLAS (FACILITATOR)",
-    "text": "'Thank you for all the help! I feel much better. See you after Friday – if the 'wind guy' doesn't blow me and all my notes straight into that river!' He giggles nervously and hugs his notebook tight.",
+    "text": "'Thank you for all the help! I feel much better. See you tomorrow – if the 'wind guy' doesn't blow me and all my notes straight into that river!' He giggles nervously and hugs his notebook tight.",
     "is_end": true,
     "choices": []
   }
