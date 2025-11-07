@@ -1,6 +1,6 @@
 // sw.js (Service Worker)
 
-const APP_SHELL_CACHE = 'app-shell-v2';
+const APP_SHELL_CACHE = 'app-shell-v3';
 const DYNAMIC_CACHE = 'dynamic-content-v1';
 
 // 1. Failai, reikalingi, kad programėlė veiktų (App Shell)
@@ -103,6 +103,7 @@ self.addEventListener('message', (event) => {
     }
 
 });
+
 
 
 
